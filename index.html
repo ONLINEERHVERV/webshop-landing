@@ -323,6 +323,29 @@ body { font-family: 'Poppins', -apple-system, sans-serif; color: var(--text); ba
     <span><svg width="14" height="14" fill="none" stroke="#637a98" stroke-width="2"><path d="M11.6 3.4L5.2 9.8 2.4 7"/></svg>Dansk support</span>
   </div>
 </div></section>
+<script>
+  function sendHeight() {
+    const height = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+
+    window.parent.postMessage(
+      { type: "setHeight", height: height },
+      "*"
+    );
+  }
+
+  // Run after full load
+  window.addEventListener("load", sendHeight);
+
+  // Run on resize
+  window.addEventListener("resize", sendHeight);
+
+  // Watch dynamic content changes
+  const observer = new ResizeObserver(sendHeight);
+  observer.observe(document.body);
+</script>
 
 <script>
 document.querySelectorAll('.faq-q').forEach(function(btn){btn.addEventListener('click',function(){var item=btn.closest('.faq-item');var wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});if(!wasOpen)item.classList.add('open')})});
