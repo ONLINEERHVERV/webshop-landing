@@ -325,10 +325,9 @@ body { font-family: 'Poppins', -apple-system, sans-serif; color: var(--text); ba
 </div></section>
 <script>
   function sendHeight() {
-    const height = Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight
-    );
+    const height = document.documentElement.scrollHeight;
+
+    console.log("Sending height:", height);
 
     window.parent.postMessage(
       { type: "setHeight", height: height },
@@ -336,16 +335,12 @@ body { font-family: 'Poppins', -apple-system, sans-serif; color: var(--text); ba
     );
   }
 
-  // Run after full load
   window.addEventListener("load", sendHeight);
-
-  // Run on resize
   window.addEventListener("resize", sendHeight);
 
-  // Watch dynamic content changes
-  const observer = new ResizeObserver(sendHeight);
-  observer.observe(document.body);
+  new ResizeObserver(sendHeight).observe(document.body);
 </script>
+
 
 <script>
 document.querySelectorAll('.faq-q').forEach(function(btn){btn.addEventListener('click',function(){var item=btn.closest('.faq-item');var wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open')});if(!wasOpen)item.classList.add('open')})});
